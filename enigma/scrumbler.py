@@ -4,11 +4,8 @@ from random import shuffle, randint, choice
 from copy import copy
 
 
-# Rotate array/cogs
 def shift(l, n):
     return l[n:] + l[:n]
-
-# 各歯車のシンプルな代替暗号
 
 
 class Scrumbler:

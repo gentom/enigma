@@ -13,16 +13,13 @@ class EnigmaMachine:
         self.printspecialchars = printspecialchars
         self.nocogs = nocogs
         self.cogs = []
-        # Create backup of original cog positions for reset
         self.originalCogs = []
 
-        # Create cogs
         for i in range(0, self.nocogs):
             self.cogs.append(Scrumbler())
             self.cogs[i].create(apb)
             self.originalCogs.append(self.cogs[i].transformation)
 
-        # Create reflector
         refabet = copy(apb)
         self.reflector = copy(apb)
         while len(refabet) > 0:
@@ -33,8 +30,7 @@ class EnigmaMachine:
             self.reflector[a] = b
             self.reflector[b] = a
 
-    # To print the enigma setup for debugging/replication
-    def print_setup(self):
+    def print_enigma_setup(self):
         print("Enigma Setup:\nCogs: ", self.nocogs, "\nCog arrangement:")
         for i in range(0, self.nocogs):
             print(self.cogs[i].transformation)
@@ -56,20 +52,14 @@ class EnigmaMachine:
                     pass
             else:
                 ln += 1
-                # Move through cogs forward
                 for i in range(0, self.nocogs):
                     num = self.cogs[i].passthrough(num)
-                # Pass through reflector
                 num = self.reflector[num]
 
-                # Move back through cogs
                 for i in range(0, self.nocogs):
                     num = self.cogs[self.nocogs - i - 1].passthrough_rev(num)
-                # add encrypted letter to ciphertext
                 encrypted_text += "" + chr(97 + num)
-                # Rotate cogs
                 for i in range(0, self.nocogs):
-                    # in a ticker clock style
                     if (ln % ((i * 6) + 1) == 0):
                         self.cogs[i].rotate()
         return encrypted_text
