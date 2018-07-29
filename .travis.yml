@@ -1,6 +1,6 @@
 language: python
 python:
-  - "3.5"
+  - "3.6.2"
 
 script:
-  - python3 test.py
+  - python3 run.py
